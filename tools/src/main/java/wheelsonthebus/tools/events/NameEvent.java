@@ -1,4 +1,4 @@
-package wheelsonthebus.users.events;
+package wheelsonthebus.tools.events;
 
 import org.springframework.cloud.bus.event.RemoteApplicationEvent;
 
