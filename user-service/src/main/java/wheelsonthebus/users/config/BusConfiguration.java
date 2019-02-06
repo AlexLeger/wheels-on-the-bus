@@ -1,4 +1,4 @@
-package wheelsonthebus.tools.config;
+package wheelsonthebus.users.config;
 
 import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.context.annotation.Configuration;
