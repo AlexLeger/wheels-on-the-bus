@@ -1,5 +1,6 @@
 package wheelsonthebus.users.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 @EnableAutoConfiguration
 @SpringBootConfiguration
+@Slf4j
 public class UserController {
 
     final private Set<String> names = ConcurrentHashMap.newKeySet();
@@ -37,12 +39,22 @@ public class UserController {
     @PutMapping("/names/{name}")
     public void sayName(@PathVariable String name) {
         this.names.add(name);
-        this.publisher.publishEvent(
-                new NameEvent(this, this.busServiceMatcher.getServiceId(), name));
+        NameEvent event = new NameEvent(this, this.busServiceMatcher.getServiceId(), name);
+        this.publisher.publishEvent(event);
+        log.info("Event was published for name "+event.getName()+
+                " with id "+event.getId()+
+                " by source "+event.getSource()+
+                " from originService "+event.getOriginService()+"" +
+                " with destinationService "+event.getDestinationService());
     }
 
     @EventListener
     public void handleNameSaid(NameEvent event) {
         this.names.add(event.getName());
+        log.info("Event was received for name "+event.getName()+
+                " with id "+event.getId()+
+                " by source "+event.getSource()+
+                " from originService "+event.getOriginService()+"" +
+                " with destinationService "+event.getDestinationService());
     }
 }
