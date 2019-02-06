@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import wheelsonthebus.users.borrowed.BusJacksonMessageConverter;
 import wheelsonthebus.users.events.NameEvent;
 
 import java.util.Collection;
@@ -25,8 +26,8 @@ public class UserController {
 
     final private Set<String> names = ConcurrentHashMap.newKeySet();
 
-    //@Autowired
-    //private BusJacksonMessageConverter converter; //TODO Find out how it should be done
+    @Autowired
+    private BusJacksonMessageConverter converter; //TODO Find out how it should be done
 
     @Autowired
     private ServiceMatcher busServiceMatcher;
