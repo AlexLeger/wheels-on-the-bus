@@ -48,7 +48,7 @@ public class UserController {
                 " with destinationService "+event.getDestinationService());
     }
 
-    @EventListener
+    @EventListener(classes = NameEvent.class)
     public void handleNameSaid(NameEvent event) {
         this.names.add(event.getName());
         log.info("Event was received for name "+event.getName()+
