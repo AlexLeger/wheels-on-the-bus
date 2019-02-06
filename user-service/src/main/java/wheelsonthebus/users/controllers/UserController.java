@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 @EnableAutoConfiguration
 @SpringBootConfiguration
-@Slf4j
+//@Slf4j
 public class UserController {
 
     final private Set<String> names = ConcurrentHashMap.newKeySet();
@@ -40,22 +40,21 @@ public class UserController {
     @PutMapping("/names/{name}")
     public void sayName(@PathVariable String name) {
         this.names.add(name);
-        NameEvent event = new NameEvent(this, this.busServiceMatcher.getServiceId(), name);
-        this.publisher.publishEvent(event);
-        log.info("Event was published for name "+event.getName()+
+        this.publisher.publishEvent(new NameEvent(this, this.busServiceMatcher.getServiceId(), name));
+        /*log.info("Event was published for name "+event.getName()+
                 " with id "+event.getId()+
                 " by source "+event.getSource()+
                 " from originService "+event.getOriginService()+"" +
-                " with destinationService "+event.getDestinationService());
+                " with destinationService "+event.getDestinationService());*/
     }
-    
+
     @EventListener
     public void handleNameSaid(NameEvent event) {
         this.names.add(event.getName());
-        log.info("Event was received for name "+event.getName()+
+        /*log.info("Event was received for name "+event.getName()+
                 " with id "+event.getId()+
                 " by source "+event.getSource()+
                 " from originService "+event.getOriginService()+"" +
-                " with destinationService "+event.getDestinationService());
+                " with destinationService "+event.getDestinationService());*/
     }
 }
